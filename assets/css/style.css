@@ -1,0 +1,65 @@
+/* Estilos extraidos de final.php + index.php (version estatica Cloudflare) */
+[data-bs-theme='dark'] .page1 { background-color: rgb(39,39,39); }
+.page1 { background-color: rgb(215,225,225); }
+th, td { text-align: center; }
+[data-bs-theme='light'] thead th { background-color: blue; }
+[data-bs-theme='dark'] h3, [data-bs-theme='dark'] h4 { color: blue; }
+h1 { color: #00aaff; }
+#volv { color: white; font-weight: 400; }
+[data-bs-theme='dark'] th {
+  border-color: #fff; color: #fff;
+  background-color: rgb(58,112,239); font-weight: 700;
+}
+a { font-weight: 900; }
+[data-bs-theme='dark'] a { color: #0d6efd; font-weight: 900; }
+[data-bs-theme='dark'] td a { color: #fff; font-weight: 900; }
+.btns01 a, .btns01 input { color: #fff; font-weight: 900; font-size: 17px; margin-right: 2%; }
+[data-bs-theme='dark'] a:hover { color: #00d5ff; -webkit-text-stroke-width: 1px; -webkit-text-stroke-color: #0976eac7; }
+.btns01 a:hover { color: #fff; }
+.navbar-brand, .nav-link { font-weight: 900; }
+[data-bs-theme='dark'] h1, h2 { color: #00aaff; }
+.td1 { text-align: left; margin-left: 50px; }
+.d1 { text-align: left; margin-left: 3%; margin-top: 5px; }
+[data-bs-theme='dark'] body {
+  background-color: rgb(33,4,4);
+  border-left: darkblue 5px solid; border-right: darkblue 5px solid; border-top: darkblue 3px solid;
+}
+body {
+  background-color: rgb(88,16,16);
+  border-left: darkblue 7px solid; border-right: darkblue 7px solid; border-top: darkblue 7px solid;
+  overflow-x: hidden;
+}
+body.home-cine {
+  background-image: url('../../imagenes/cine.gif');
+  background-size: cover; background-position: center;
+  background-attachment: fixed; background-repeat: no-repeat;
+}
+#c1 { height: 100%; border-radius: 5px; background-color: rgb(145,42,42); }
+[data-bs-theme='dark'] #c1 { background-color: rgb(45,45,45); }
+#tema { margin-right: 20px; }
+[data-bs-theme='dark'] #tema { margin-right: 0; }
+#navbar { border-bottom: gray 1px solid; }
+[data-bs-theme='dark'] #navbar { padding-top: 12px; }
+.lblt { font-weight: 700; }
+[data-bs-theme='dark'] .lblt { color: #fff; }
+.navbar-no-expand { flex-wrap: wrap; }
+td { white-space: nowrap; }
+.hero-box { background: rgba(141,132,132,.742); border-radius: 10px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,.1); }
+#tit, #tit1 {
+  color: rgb(210,3,3); font-weight: 900; font-size: 60px;
+  font-family: "Times New Roman", Times, serif;
+  -webkit-text-stroke-width: 4px; -webkit-text-stroke-color: rgb(108,1,1);
+}
+#tit1 { font-size: 75px; }
+@media (max-width: 817px) {
+  #tema { display: inline; text-align: left; margin-top: 3%; }
+  #texto { width: 100%; font-size: 14px; }
+}
+@media (max-width: 750px) {
+  #tit { font-size: 50px; } #tit1 { font-size: 65px; }
+  #imgcentral { height: 27vh; }
+}
+@media (max-width: 380px) {
+  #imgcentral { height: 25vh; }
+  #texto { width: 100%; font-size: 12px; }
+}

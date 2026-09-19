@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catalogo - App de peliculas</title>
+  <link rel="icon" type="image/png" href="../imagenes/logo.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="page1">
+<nav class="navbar navbar-expand navbar-dark bg-dark" id="navbar">
+  <div class="container-fluid">
+    <img src="../imagenes/logo.png" width="7%" style="margin-right:10px;" alt="logo">
+    <a class="navbar-brand" href="../index.html">Web de peliculas</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link active" href="./index.html">Catalogo</a></li>
+        <li class="nav-item"><a class="nav-link" href="../genero/index.html">Genero</a></li>
+        <li class="nav-item"><a class="nav-link" href="../popularidad/index.html">Popularidad</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container-fluid" id="tema">
+    <div class="form-check form-switch ms-auto">
+      <label class="lblt" id="lbl1">Desactivar</label>
+      <input class="form-check-input" type="checkbox" id="themeToggle" checked>
+      <label class="lblt" for="themeToggle">tema oscuro</label>
+    </div>
+  </div>
+</nav>
+
+<br><br><h1 class="text-center mb-4">Cartelera</h1><br>
+<div style="text-align:center;width:100%;">
+  <div class="row row-cols-1 row-cols-md-1 g-4">
+    <img src="./cartelera/peliculas01.png" id="imgcentral" width="100%" height="40%" alt="cartelera"><br>
+  </div><br>
+  <input type="button" value="<<--" id="btnAnt">
+  <input type="text" disabled id="texto" size="60%" value="Brave - Beetlejuice - John Wick - Cineterror" style="text-align:center">
+  <input type="button" value="-->>" id="btnSig"><br><br><br>
+</div>
+
+<div class="container mt-4"><div class="row row-cols-1 row-cols-md-1 g-4">
+  <img src="../imagenes/cine2.png" alt="cine">
+</div></div>
+
+<div class="container"><div class="card" style="width:100%;" id="c1">
+<div class="card-body" style="overflow-x:auto;">
+  <h1 class="text-center mb-4">Catalogo</h1>
+  <div id="msg" class="alert" style="display:none;"></div>
+  <button class="btn btn-success mb-3" id="btnNuevo" style="color:#fff;">Nuevo</button>
+
+  <div class="card mb-3" id="formCard" style="display:none;"><div class="card-body">
+    <h5 class="card-title" id="formTitle">Nueva pelicula</h5>
+    <form id="form">
+      <input type="hidden" id="fid">
+      <div class="mb-3"><label class="form-label">Nombre</label><input type="text" class="form-control" id="fnombre" required></div>
+      <div class="mb-3"><label class="form-label">Puntuacion</label><input type="number" class="form-control" id="fpuntuacion" required></div>
+      <div class="mb-3"><label class="form-label">Genero</label><select id="fgenero" class="form-control"></select></div>
+      <div class="mb-3"><label class="form-label">Popularidad</label><select id="fpopul" class="form-control"></select></div>
+      <button type="submit" class="btn btn-secondary" id="btnGuardar">Crear</button>
+      <button type="button" class="btn btn-secondary" id="btnVolver">Volver</button>
+    </form>
+  </div></div>
+
+  <table class="table table-hover table-bordered" style="overflow-x:scroll;">
+    <thead><tr><th>Id</th><th>Nombre</th><th>Genero</th><th>Popularidad</th><th>Puntuacion</th><th width="17%">Acciones</th></tr></thead>
+    <tbody id="tbody"><tr><td colspan="6">Cargando...</td></tr></tbody>
+  </table>
+</div>
+
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Galería de Películas</h1>
+  <div class="row row-cols-1 row-cols-md-3 g-4" id="galeria"></div>
+</div>
+<br><br>
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/js/config.js"></script>
+<script src="../assets/js/supa.js"></script>
+<script src="../assets/js/theme.js"></script>
+<script>
+// Carrusel (igual que version PHP)
+(function () {
+  var actual = 1, limite = 3;
+  var textos = ["Brave - Beetlejuice - John Wick - Cineterror", "Avengers - Matrix - Antebellum - Jurassic world", "Star Wars - Casa de papel - Harry potter - Lion king"];
+  var imgs = [];
+  for (var i = 1; i <= limite; i++) { imgs[i] = new Image(); imgs[i].src = './cartelera/peliculas0' + i + '.png'; }
+  function func(x) {
+    if (x.target.id === 'btnAnt') { actual -= 1; actual = actual === 0 ? limite : actual; }
+    else { actual += 1; actual = actual > limite ? 1 : actual; }
+    document.getElementById('imgcentral').setAttribute('style', 'width:100%;max-width:3000px;');
+    document.getElementById('imgcentral').src = imgs[actual].src;
+    document.getElementById('texto').value = textos[actual - 1];
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('btnAnt').addEventListener('click', func);
+    document.getElementById('btnSig').addEventListener('click', func);
+  });
+})();
+
+const db = supaClient();
+let generos = [], popularidades = [], pelis = [];
+const PORTADAS = ['peli1.png', 'peli2.png', 'peli3.png', 'peli04.png', 'peli5.png', 'peli6.png'];
+
+async function load() {
+  try {
+    [pelis, generos, popularidades] = await Promise.all([db.list('catalogo'), db.list('genero'), db.list('popularidad')]);
+    const gmap = Object.fromEntries(generos.map(g => [g.id, g.nombre]));
+    const pmap = Object.fromEntries(popularidades.map(p => [p.id, p.nombre]));
+    const tbody = document.getElementById('tbody');
+    tbody.innerHTML = pelis.length ? pelis.map(r =>
+      `<tr><td>${r.id}</td><td>${esc(r.nombre)}</td><td>${esc(gmap[r.id_genero] ?? r.id_genero)}</td><td>${esc(pmap[r.id_popularidad] ?? r.id_popularidad)}</td><td>${esc(r.puntuacion)}</td>
+      <td><button class="btn btn-primary btn-sm" onclick="editPeli(${r.id})">Editar</button>
+      <button class="btn btn-danger btn-sm" onclick="delPeli(${r.id})">Eliminar</button></td></tr>`).join('')
+      : '<tr><td colspan="6">0 resultados</td></tr>';
+    // selects
+    document.getElementById('fgenero').innerHTML = generos.map(g => `<option value="${g.id}">${esc(g.nombre)}</option>`).join('');
+    document.getElementById('fpopul').innerHTML = popularidades.map(p => `<option value="${p.id}">${esc(p.nombre)}</option>`).join('');
+    // galeria (primeras 6 pelis, como PHP)
+    const gal = document.getElementById('galeria');
+    gal.innerHTML = pelis.slice(0, 6).map((r, i) =>
+      `<div class="col"><div class="card bg-secondary text-light h-100">
+      <img src="../imagenes/portadas/${PORTADAS[i % PORTADAS.length]}" class="card-img-top" alt="Pelicula">
+      <div class="card-body"><h5 class="card-title">- ${esc(r.nombre)}</h5><p class="card-text">Una breve descripción de la película.</p></div>
+      </div></div>`).join('');
+  } catch (e) {
+    document.getElementById('tbody').innerHTML = `<tr><td colspan="6">${esc(e.message)}</td></tr>`;
+  }
+}
+function editPeli(id) {
+  const r = pelis.find(x => x.id === id);
+  if (!r) return;
+  document.getElementById('formCard').style.display = 'block';
+  document.getElementById('formTitle').textContent = 'Editar pelicula';
+  document.getElementById('fid').value = r.id;
+  document.getElementById('fnombre').value = r.nombre;
+  document.getElementById('fpuntuacion').value = r.puntuacion;
+  document.getElementById('fgenero').value = r.id_genero;
+  document.getElementById('fpopul').value = r.id_popularidad;
+  document.getElementById('btnGuardar').textContent = 'Actualizar';
+  window.scrollTo({ top: document.getElementById('formCard').offsetTop - 80, behavior: 'smooth' });
+}
+async function delPeli(id) {
+  if (!confirm('¿Seguro que desea eliminar?')) return;
+  try { await db.remove('catalogo', id); showMsg('msg', 'Eliminado correctamente'); load(); }
+  catch (e) { showMsg('msg', e.message, true); }
+}
+document.getElementById('btnNuevo').onclick = () => {
+  document.getElementById('formCard').style.display = 'block';
+  document.getElementById('formTitle').textContent = 'Nueva pelicula';
+  document.getElementById('fid').value = '';
+  document.getElementById('form').reset();
+  document.getElementById('btnGuardar').textContent = 'Crear';
+};
+document.getElementById('btnVolver').onclick = () => document.getElementById('formCard').style.display = 'none';
+document.getElementById('form').onsubmit = async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('fid').value;
+  const row = {
+    nombre: document.getElementById('fnombre').value.trim(),
+    puntuacion: parseInt(document.getElementById('fpuntuacion').value, 10) || 0,
+    id_genero: parseInt(document.getElementById('fgenero').value, 10),
+    id_popularidad: parseInt(document.getElementById('fpopul').value, 10),
+  };
+  try {
+    if (id) await db.update('catalogo', id, row);
+    else await db.insert('catalogo', row);
+    showMsg('msg', id ? 'Registro actualizado' : 'Registro creado exitosamente');
+    document.getElementById('formCard').style.display = 'none'; load();
+  } catch (err) { showMsg('msg', err.message, true); }
+};
+load();
+</script>
+</body>
+</html>

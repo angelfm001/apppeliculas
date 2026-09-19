@@ -1,0 +1,54 @@
+Con los tres scripts que ya tienes, el flujo natural para subir el proyecto por fases (cada fase en su propia rama, construyendo sobre la anterior) es este:
+Resumen:
+-Luego de crear el proyecto y tener la base:
+1-Desarrollar fase1 
+2-Editar commit-message.txt → "Fase 1: ..."
+3-Editar branch-name.txt → rama1.
+4-Correr: nuevarama.ps1 (creara la rama y guardara el progreso actual)
+5-Correr: cambiorama.ps1
+6-Desarrollar fase2
+7-Editar commit-message.txt → "Fase 2: ..."
+8-Editar branch-name.txt → rama2.
+9-Correr: nuevarama.ps1
+10-branch-name.txt → rama2 → cambiorama.ps1 (te cambia a rama2).
+11-Cambios de fase 3.
+12-branch-name.txt → rama3, commit-message.txt → "Fase 3: ...".
+13-nuevarama.ps1: crea y actualiza rama3.
+
+Fase 0 — main (repo ya creado)
+Repo clonado, parado en main.
+
+Como ya estás en main y ese es el default de -Branch:
+//crear rama y subir cambios
+Fase 1 — rama1
+Sigues en main (recién sincronizado). Editas branch-name.txt → rama1.
+Haces los cambios de la fase 1 en el código.
+Editas commit-message.txt → "Fase 1: ...".
+Corres:
+.\scripts\nuevarama.ps1
+
+Esto crea rama1 desde main, comitea la fase 1 ahí, la sube (push -u origin rama1), 
+y te regresa automáticamente a main limpio (sin esos cambios ahí).
+
+Fase 2 — rama2 (construida sobre fase 1)
+Editas branch-name.txt → rama1.
+Corres:
+.\scripts\cambiorama.ps1
+
+Te cambia a rama1 (ya existe, local o remota).
+
+Haces los cambios de la fase 2, parado en rama1.
+Editas branch-name.txt → rama2, y commit-message.txt → "Fase 2: ...".
+Corres:
+.\scripts\nuevarama.ps1
+
+Crea rama2 desde rama1 (el punto donde estás parado), comitea la fase 2, la sube, y te regresa a rama1 (tu rama de partida en ese momento).
+
+Fase 3 — rama3 (construida sobre fase 2)
+
+Mismo patrón:
+
+branch-name.txt → rama2 → cambiorama.ps1 (te cambia a rama2).
+Cambios de fase 3.
+branch-name.txt → rama3, commit-message.txt → "Fase 3: ...".
+nuevarama.ps1 → crea rama3 desde rama2, comitea, sube, te regresa a rama2.

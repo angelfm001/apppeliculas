@@ -1,0 +1,9 @@
+name = "sitio-pelisweb"
+compatibility_date = "2026-09-18"
+
+# Cloudflare Pages: Build configuration
+# - La web esta en la raiz (index.html, catalogo/, genero/, etc.)
+# - Build command: (vacio, es estatico)
+# - Deploy: `npx wrangler pages deploy .`
+[site]
+bucket = "./"
